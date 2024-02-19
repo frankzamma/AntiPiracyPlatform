@@ -11,7 +11,7 @@ type SmartContract struct {
 }
 
 type Operator struct {
-	name string
+	Name string `json:"name"`
 }
 
 type Request struct {
