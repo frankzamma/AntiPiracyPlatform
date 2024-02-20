@@ -91,9 +91,9 @@ func (s *SmartContract) AddRequest(ctx contractapi.TransactionContextInterface,
 	return ctx.GetStub().PutState(id, requestJSON)
 }
 
-func (s *SmartContract) Confirm(idRichiesta string, operatorID string, confermaID string) error {
+func (s *SmartContract) Confirm(ctx contractapi.TransactionContextInterface, idRichiesta string, operatorID string, confermaID string) error {
 
-	exists, err := s.RequestExists(ctx, id)
+	exists, err := s.RequestExists(ctx, idRichiesta)
 	if err != nil {
 		return err
 	}
