@@ -10,17 +10,18 @@ type SmartContract struct {
 	contractapi.Contract
 }
 
-type Operator struct {
-	Name string `json:"name"`
+type Confirmed struct {
+	ID         string  `json:"ID"`
+	Request    Request `json:"name"`
+	OperatorID string  `json:"OperatorID"`
 }
 
 type Request struct {
-	ID          string     `json:"ID"`
-	IpAddress   string     `json:"IpAddress"`
-	Description string     `json:"Description"`
-	HashImages  []string   `json:"HashImages"`
-	Verified    bool       `json:"Verified"`
-	Operators   []Operator `json:"Operators"`
+	ID          string   `json:"ID"`
+	IpAddress   string   `json:"IpAddress"`
+	Description string   `json:"Description"`
+	HashImages  []string `json:"HashImages"`
+	Verified    bool     `json:"Verified"`
 }
 
 // InitLedger Funzione aggiunta per simulare la presenza di qualche richiesta
@@ -31,14 +32,12 @@ func (s *SmartContract) InitLedger(ctx contractapi.TransactionContextInterface) 
 			Description: "Flusso video che mostra la partita Napoli-Salernitana",
 			HashImages:  []string{"HashImg1", "HashImg2", "HashImg3"},
 			Verified:    false,
-			Operators:   []Operator{{"Test"}},
 		},
 		{ID: "02",
 			IpAddress:   "192.168.0.2",
 			Description: "Flusso video che mostra la partita Milan-Salernitana",
 			HashImages:  []string{"HashImg1", "HashImg2", "HashImg3"},
 			Verified:    false,
-			Operators:   []Operator{{"Test"}},
 		},
 	}
 
@@ -81,7 +80,7 @@ func (s *SmartContract) AddRequest(ctx contractapi.TransactionContextInterface,
 	request := Request{ID: id, IpAddress: ipAddress,
 		Description: description,
 		HashImages:  hashImages,
-		Verified:    false, Operators: []Operator{{"Test"}}}
+		Verified:    false}
 
 	requestJSON, err := json.Marshal(request)
 
