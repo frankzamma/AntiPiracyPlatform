@@ -91,6 +91,58 @@ func (s *SmartContract) AddRequest(ctx contractapi.TransactionContextInterface,
 	return ctx.GetStub().PutState(id, requestJSON)
 }
 
+func (s *SmartContract) Confirm(idRichiesta string, operatorID string, confermaID string) error {
+
+	exists, err := s.RequestExists(ctx, id)
+	if err != nil {
+		return err
+	}
+
+	if !exists {
+		return fmt.Errorf("richiesta con ID %s non trovata", idRichiesta)
+	}
+
+	// Recupera l'oggetto Request tramite l'ID
+	richiesta, err := s.GetRichiestaById(ctx, idRichiesta)
+	if err != nil {
+		return err
+	}
+
+	// Crea l'oggetto Conferma
+	conferma := Confirmed{
+		ID:         confermaID,
+		Request:    *richiesta,
+		OperatorID: operatorID,
+	}
+	// Converte l'oggetto Conferma in JSON
+	confermaJSON, err := json.Marshal(conferma)
+	if err != nil {
+		return err
+	}
+
+	return ctx.GetStub().PutState(confermaID, confermaJSON)
+
+}
+
+func (s *SmartContract) GetRichiestaById(ctx contractapi.TransactionContextInterface, id string) (*Request, error) {
+	requestJSON, err := ctx.GetStub().GetState(id)
+	if err != nil {
+		return nil, fmt.Errorf("failed to read from world state: %v", err)
+	}
+
+	if requestJSON == nil {
+		return nil, fmt.Errorf("richiesta con ID %s non trovata", id)
+	}
+
+	var request Request
+	err = json.Unmarshal(requestJSON, &request)
+	if err != nil {
+		return nil, err
+	}
+
+	return &request, nil
+}
+
 func (s *SmartContract) GetAllRequest(ctx contractapi.TransactionContextInterface) ([]*Request, error) {
 	// range query with empty string for startKey and endKey does an
 	// open-ended query of all request in the chaincode namespace.
