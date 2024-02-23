@@ -1,7 +1,7 @@
 package main
 
 import (
-	"RestInterface/web"
+	"RestInterfaceOrg1/web"
 	"fmt"
 )
 

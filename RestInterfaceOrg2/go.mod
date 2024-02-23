@@ -1,4 +1,4 @@
-module RestInterface
+module RestInterfaceOrg2
 
 go 1.22rc2
 
