@@ -2,6 +2,7 @@ import React, { useState, useContext } from "react";
 import axios from "axios";
 import { AuthContext } from "./AuthContext";
 import { useNavigate } from "react-router-dom";
+import "../style/Login.css"
 
 const Login = () => {
     const [username, setUsername] = useState("");
@@ -32,22 +33,30 @@ const Login = () => {
     };
 
     return (
-        <div>
+        <div className="container text-center">
+            <div className="row align-items-center"></div>
             {errorMessage && <div style={{ color: "red" }}>{errorMessage}</div>}{" "}
-            <form onSubmit={handleSubmit}>
-                <input
-                    value={username}
-                    onChange={(e) => setUsername(e.target.value)}
-                    placeholder="Username"
-                />
-                <input
-                    type="password"
-                    value={password}
-                    onChange={(e) => setPassword(e.target.value)}
-                    placeholder="Password"
-                />
-                <button type="submit">Login</button>
-            </form>
+            <div className="row align-items-center">
+                <form className="login-form" onSubmit={handleSubmit}>
+                    <h2>Login</h2>
+
+                    <input className="form-control"
+                           value={username}
+                           onChange={(e) => setUsername(e.target.value)}
+                           placeholder="Username"
+                           type="text"
+                    />
+                    <br/>
+                    <input className="form-control"
+                           type="password"
+                           value={password}
+                           onChange={(e) => setPassword(e.target.value)}
+                           placeholder="Password"
+                    />
+                    <br/>
+                    <button type="submit">Login</button>
+                </form>
+            </div>
         </div>
     );
 };
