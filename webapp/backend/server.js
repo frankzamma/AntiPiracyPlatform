@@ -23,49 +23,46 @@ app.use(cors()); // Use CORS middleware to allow requests from the frontend
 app.use(express.json());
 app.use("/api/auth", authRoutes); // All the routes defined in auth.js will be prefixed with /api/auth
 
-const users = [
-    {"username" : "frank",
-        "password" : "2002",
-        "OrgName" : "Org1"},
-    {"username" : "amigli",
-        "password" : "2002",
-        "OrgName" : "Org2"}]
-
-const username1 = "frank"
-const username2 = "amigli"
-const password1 = "2002"
-const password2 = "2002"
-const OrgName1  ="Org1"
-const OrgName2 = "Org2"
-
-const user1 = bcrypt.genSalt(10)
-    .then(
-    salt =>{
-        return bcrypt.hash(password1, salt)
-    })
-    .then(hash =>{
-        return new User({
-                username: username1,
-                OrgName: OrgName1,
-                password: hash
-            }
-        )
-    });
-
-const user2 = bcrypt.genSalt(10)
-    .then(
-        salt =>{
-            return bcrypt.hash(password2, salt)
-        })
-    .then(hash =>{
-        return new User({
-                username: username2,
-                OrgName: OrgName2,
-                password: hash
-            }
-        )
-    });
-
 app.listen(PORT, () => {
-    console.log(`Server running on port ${PORT}`);
+    const username1 = "frank"
+    const username2 = "amigli"
+    const password1 = "2002"
+    const password2 = "2002"
+    const OrgName1  ="Org1"
+    const OrgName2 = "Org2"
+
+    bcrypt.genSalt(10)
+        .then(
+            salt =>{
+                return bcrypt.hash(password1, salt)
+            })
+        .then(hash =>{
+               let user1 = new User({
+                    username: username1,
+                    OrgName: OrgName1,
+                    password: hash
+                })
+
+                user1.save()
+        });
+
+    bcrypt.genSalt(10)
+        .then(
+            salt =>{
+                return bcrypt.hash(password2, salt)
+            })
+        .then(hash =>{
+            let user2 = new User({
+                    username: username2,
+                    OrgName: OrgName2,
+                    password: hash
+                }
+            )
+
+            user2.save();
+        });
+
+   console.log(`Server running on port ${PORT}`);
 });
+
+
