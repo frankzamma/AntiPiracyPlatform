@@ -22,7 +22,7 @@ const Login = () => {
             localStorage.setItem("token", response.data.token);
 
             setOrgName(response.data.org);
-            localStorage.setItem("orgName", response.data.org)
+            sessionStorage.setItem("orgName", response.data.org)
             navigate("/dashboard");
         } catch (error) {
             console.error("Authentication failed:", error);
