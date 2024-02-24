@@ -17,8 +17,9 @@ router.post("/login", async (req, res) => {
         return res.status(400).send("Invalid username or password.");
 
     const token = jwt.sign({ userId: user.id }, process.env.JWT_SECRET);
+    const org =  user.OrgName
 
-    res.send({ token });
+    res.send({ token, org });
 });
 
 router.post("/register", async (req, res) => {
