@@ -9,6 +9,7 @@ const Login = () => {
     const [password, setPassword] = useState("");
     const [errorMessage, setErrorMessage] = useState(null); // New state for handling error messages
     const { setToken } = useContext(AuthContext);
+    const { setOrgName } = useContext(AuthContext);
     const navigate = useNavigate();
     const handleSubmit = async (e) => {
         e.preventDefault();
@@ -19,6 +20,9 @@ const Login = () => {
             });
             setToken(response.data.token);
             localStorage.setItem("token", response.data.token);
+
+            setOrgName(response.data.org);
+            localStorage.setItem("orgName", response.data.org)
             navigate("/dashboard");
         } catch (error) {
             console.error("Authentication failed:", error);
