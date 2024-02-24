@@ -1,6 +1,7 @@
 const express = require("express");
 const mongoose = require("mongoose");
 const authRoutes = require("./routes/auth");
+const salvaRichiesta = require("./routes/SalvaRichiesta")
 const cors = require("cors"); // Import the CORS middleware
 const User = require("./models/user")
 const bcrypt = require("bcrypt");
@@ -22,9 +23,9 @@ mongoose
 app.use(cors()); // Use CORS middleware to allow requests from the frontend
 app.use(express.json());
 app.use("/api/auth", authRoutes); // All the routes defined in auth.js will be prefixed with /api/auth
-
+app.use(salvaRichiesta)
 app.listen(PORT, () => {
-    const username1 = "frank"
+    /*const username1 = "frank"
     const username2 = "amigli"
     const password1 = "2002"
     const password2 = "2002"
@@ -60,7 +61,7 @@ app.listen(PORT, () => {
             )
 
             user2.save();
-        });
+        });*/
 
    console.log(`Server running on port ${PORT}`);
 });
