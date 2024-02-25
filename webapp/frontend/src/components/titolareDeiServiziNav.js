@@ -22,7 +22,7 @@ const TitolareDeiServiziNav = () => {
                                 Operazioni
                             </a>
                             <ul className="dropdown-menu">
-                                <li><a className="dropdown-item" href="#">Inserisci nuova richiesta</a></li>
+                                <li><a className="dropdown-item" href="/form-aggiungi-richiesta">Inserisci nuova richiesta</a></li>
                                 <li><a className="dropdown-item" href="#">Verifica richieste passate</a></li>
                                 <li>
                                     <hr className="dropdown-divider"/>

@@ -18,13 +18,13 @@ function Dashboard() {
         return (
             <div>
                 <TitolareDeiServiziNav/> {/* Includi la Navbar qui */}
-                <h1>"Dashboard: Protected Content Here Org1"</h1>
+                <h1>"Benvenuto utente di: Org1"</h1>
             </div>)
     }else{
         return (
             <div>
                 <OperatoreNav/> {/* Includi la Navbar qui */}
-                <h1>"Dashboard: Protected Content Here Org2"</h1>
+                <h1>"Benvenuto utente di: Org2"</h1>
             </div>)
     }
 

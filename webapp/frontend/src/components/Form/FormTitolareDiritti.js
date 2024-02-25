@@ -61,12 +61,13 @@ function FormTitolareDiritti() {
 
             const response = await axios.post("/save-request", formData, {
                 headers: {
-                    'Content-Type': 'multipart/form-data'
+                    'Content-Type': 'multipart/form-data',
+                    'Authorization': `${token}`
                 }
             })
             navigate("/dashboard")
         } catch (error) {
-            console.error("Send Failed", error);
+            window.alert("ERRORE:" + error)
         }
     };
 
