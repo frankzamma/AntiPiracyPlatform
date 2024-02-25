@@ -10,33 +10,37 @@ type SmartContract struct {
 	contractapi.Contract
 }
 
-type Confirmed struct {
-	ID         string  `json:"ID"`
-	Request    Request `json:"name"`
-	OperatorID string  `json:"OperatorID"`
-}
-
 type Request struct {
-	ID          string   `json:"ID"`
-	IpAddress   string   `json:"IpAddress"`
-	Description string   `json:"Description"`
-	HashImages  []string `json:"HashImages"`
-	Verified    bool     `json:"Verified"`
+	ID          string          `json:"ID"`
+	IpAddress   string          `json:"IpAddress"`
+	Description string          `json:"Description"`
+	HashImage   string          `json:"HashImages"`
+	PathImage   string          `json:"PathImages"`
+	Verified    bool            `json:"Verified"`
+	Confirmed   map[string]bool `json:"Confirmed"`
 }
 
 // InitLedger Funzione aggiunta per simulare la presenza di qualche richiesta
 func (s *SmartContract) InitLedger(ctx contractapi.TransactionContextInterface) error {
+	m := make(map[string]bool)
+
+	m["Org2"] = false
+
 	requests := []Request{
 		{ID: "01",
 			IpAddress:   "192.168.0.1",
 			Description: "Flusso video che mostra la partita Napoli-Salernitana",
-			HashImages:  []string{"HashImg1", "HashImg2", "HashImg3"},
+			HashImage:   "HashImg",
+			PathImage:   "fakepath",
+			Confirmed:   m,
 			Verified:    false,
 		},
 		{ID: "02",
 			IpAddress:   "192.168.0.2",
 			Description: "Flusso video che mostra la partita Milan-Salernitana",
-			HashImages:  []string{"HashImg1", "HashImg2", "HashImg3"},
+			HashImage:   "HashImg",
+			Confirmed:   m,
+			PathImage:   "fakepath",
 			Verified:    false,
 		},
 	}
@@ -66,7 +70,7 @@ func (s *SmartContract) RequestExists(ctx contractapi.TransactionContextInterfac
 }
 
 func (s *SmartContract) AddRequest(ctx contractapi.TransactionContextInterface,
-	id string, ipAddress string, description string, hashImages []string) error {
+	id string, ipAddress string, description string, hashImage string) error {
 
 	exists, err := s.RequestExists(ctx, id)
 	if err != nil {
@@ -79,7 +83,7 @@ func (s *SmartContract) AddRequest(ctx contractapi.TransactionContextInterface,
 
 	request := Request{ID: id, IpAddress: ipAddress,
 		Description: description,
-		HashImages:  hashImages,
+		HashImage:   hashImage,
 		Verified:    false}
 
 	requestJSON, err := json.Marshal(request)
@@ -91,13 +95,12 @@ func (s *SmartContract) AddRequest(ctx contractapi.TransactionContextInterface,
 	return ctx.GetStub().PutState(id, requestJSON)
 }
 
-func (s *SmartContract) Confirm(ctx contractapi.TransactionContextInterface, idRichiesta string, operatorID string, confermaID string) error {
+func (s *SmartContract) Confirm(ctx contractapi.TransactionContextInterface, idRichiesta string, operatorID string) error {
 
 	exists, err := s.RequestExists(ctx, idRichiesta)
 	if err != nil {
 		return err
 	}
-
 	if !exists {
 		return fmt.Errorf("richiesta con ID %s non trovata", idRichiesta)
 	}
@@ -108,26 +111,22 @@ func (s *SmartContract) Confirm(ctx contractapi.TransactionContextInterface, idR
 		return err
 	}
 
-	// Crea l'oggetto Conferma
-	conferma := Confirmed{
-		ID:         confermaID,
-		Request:    *richiesta,
-		OperatorID: operatorID,
-	}
 	// Converte l'oggetto Conferma in JSON
-	confermaJSON, err := json.Marshal(conferma)
+	richiesta.Confirmed[operatorID] = true
+
+	richiestaJson, err := json.Marshal(richiesta)
 	if err != nil {
 		return err
 	}
 
-	return ctx.GetStub().PutState(confermaID, confermaJSON)
+	return ctx.GetStub().PutState(richiesta.ID, richiestaJson)
 
 }
 
 func (s *SmartContract) GetRichiestaById(ctx contractapi.TransactionContextInterface, id string) (*Request, error) {
 	requestJSON, err := ctx.GetStub().GetState(id)
 	if err != nil {
-		return nil, fmt.Errorf("failed to read from world state: %v", err)
+		return nil, fmt.Errorf("errore di lettura dallo stato: %v", err)
 	}
 
 	if requestJSON == nil {
