@@ -14,13 +14,14 @@ type Request struct {
 	ID          string          `json:"ID"`
 	IpAddress   string          `json:"IpAddress"`
 	Description string          `json:"Description"`
+	Category    int             `json:"Category"`
 	HashImage   string          `json:"HashImages"`
 	PathImage   string          `json:"PathImages"`
 	Verified    bool            `json:"Verified"`
 	Confirmed   map[string]bool `json:"Confirmed"`
 }
 
-// InitLedger Funzione aggiunta per simulare la presenza di qualche richiesta
+// InitLedger Funzione aggiunta per simulare la presenza di qualche richiesta [Metodo da eliminare in deployment]
 func (s *SmartContract) InitLedger(ctx contractapi.TransactionContextInterface) error {
 	m := make(map[string]bool)
 
@@ -70,7 +71,8 @@ func (s *SmartContract) RequestExists(ctx contractapi.TransactionContextInterfac
 }
 
 func (s *SmartContract) AddRequest(ctx contractapi.TransactionContextInterface,
-	id string, ipAddress string, description string, hashImage string) error {
+	id string, ipAddress string, description string, hashImage string, pathImage string, verified bool,
+	actualOperators []string, category int) error {
 
 	exists, err := s.RequestExists(ctx, id)
 	if err != nil {
@@ -81,10 +83,20 @@ func (s *SmartContract) AddRequest(ctx contractapi.TransactionContextInterface,
 		return fmt.Errorf("e' presente già una richiesta con lo stesso ID %s", id)
 	}
 
-	request := Request{ID: id, IpAddress: ipAddress,
+	mapOp := make(map[string]bool)
+	for _, v := range actualOperators {
+		mapOp[v] = false
+	}
+
+	request := Request{ID: id,
+		IpAddress:   ipAddress,
 		Description: description,
+		PathImage:   pathImage,
 		HashImage:   hashImage,
-		Verified:    false}
+		Verified:    verified,
+		Category:    category,
+		Confirmed:   mapOp,
+	}
 
 	requestJSON, err := json.Marshal(request)
 
