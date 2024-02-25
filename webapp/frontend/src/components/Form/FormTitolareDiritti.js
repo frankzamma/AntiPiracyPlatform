@@ -11,6 +11,7 @@ function FormTitolareDiritti() {
     const [description, setDescription] = useState("");
     const [image, setImage] = useState(null)
     const [categoria, setCategoria] = useState("");
+    const [id, setId] = useState("")
     const navigate = useNavigate();
 
     if (loading) {
@@ -26,6 +27,9 @@ function FormTitolareDiritti() {
     }
 
 
+    const handleIdChange = (e) =>{
+        setId(e.target.value);
+    }
 
     const handleIpAddressChange = (e) =>{
         setIpAddress(e.target.value);
@@ -40,7 +44,7 @@ function FormTitolareDiritti() {
     }
 
     const handleCategoriaChange = (e) =>{
-        setCategoria(e.target.selected)
+        setCategoria(e.target.value)
     }
 
 
@@ -53,11 +57,12 @@ function FormTitolareDiritti() {
 
             const formData = new FormData()
 
+            formData.append("id", id)
             formData.append("ipAddress", ipAddress)
             formData.append("description", description)
             formData.append("file", image)
             formData.append("categoria", categoria)
-
+            formData.append("id", id)
 
             const response = await axios.post("/save-request", formData, {
                 headers: {
@@ -65,6 +70,8 @@ function FormTitolareDiritti() {
                     'Authorization': `${token}`
                 }
             })
+
+            window.alert("Transazione eseguita:" + response)
             navigate("/dashboard")
         } catch (error) {
             window.alert("ERRORE:" + error)
@@ -76,6 +83,11 @@ function FormTitolareDiritti() {
             <TitolareDeiServiziNav></TitolareDeiServiziNav>
             <div className="container" style={{backgroundColor: "white"}}>
                 <form onSubmit={handleSubmit}>
+                    <div className="mb-3">
+                        <label htmlFor="id" className="form-label">ID</label>
+                        <input className="form-control" type="text" id="id" value={id}
+                               onChange={handleIdChange} placeholder="IpAddress"/>
+                    </div>
                     <div className="mb-3">
                         <label htmlFor="ipInput" className="form-label">Ip address</label>
                         <input className="form-control" type="text" id="ipInput" value={ipAddress}
@@ -95,7 +107,8 @@ function FormTitolareDiritti() {
 
                     <div className="mb-3">
                         <label htmlFor="formFile" className="form-label">Categoria</label>
-                        <select className="form-select" onChange={handleCategoriaChange}  aria-label="Default select example">
+                        <select className="form-select" onChange={handleCategoriaChange}
+                                aria-label="Default select example">
                             <option selected>Open this select menu</option>
                             <option value="0">Basket</option>
                             <option value="1">Boxing</option>
@@ -108,9 +121,9 @@ function FormTitolareDiritti() {
                             <option value="8">Volleyball</option>
                         </select>
                     </div>
-                        <br/>
+                    <br/>
 
-                        <button>Upload</button>
+                    <button>Upload</button>
                 </form>
 
 
@@ -120,7 +133,7 @@ function FormTitolareDiritti() {
         </div>
 
 
-);
+    );
 
 
 }
