@@ -4,6 +4,7 @@ import (
 	"encoding/json"
 	"fmt"
 	"github.com/hyperledger/fabric-contract-api-go/contractapi"
+	"strings"
 )
 
 type SmartContract struct {
@@ -72,7 +73,7 @@ func (s *SmartContract) RequestExists(ctx contractapi.TransactionContextInterfac
 
 func (s *SmartContract) AddRequest(ctx contractapi.TransactionContextInterface,
 	id string, ipAddress string, description string, hashImage string, pathImage string, verified bool,
-	actualOperators []string, category int) error {
+	actualOperatorsString string, category int) error {
 
 	exists, err := s.RequestExists(ctx, id)
 	if err != nil {
@@ -84,6 +85,8 @@ func (s *SmartContract) AddRequest(ctx contractapi.TransactionContextInterface,
 	}
 
 	mapOp := make(map[string]bool)
+
+	actualOperators := strings.Split(actualOperatorsString, ";")
 	for _, v := range actualOperators {
 		mapOp[v] = false
 	}
