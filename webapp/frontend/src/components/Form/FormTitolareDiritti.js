@@ -62,17 +62,19 @@ function FormTitolareDiritti() {
             formData.append("description", description)
             formData.append("file", image)
             formData.append("categoria", categoria)
-            formData.append("id", id)
 
-            const response = await axios.post("/save-request", formData, {
+            console.log("test")
+            axios.post("/save-request", formData, {
                 headers: {
                     'Content-Type': 'multipart/form-data',
                     'Authorization': `${token}`
                 }
+            }).then( response =>{
+                console.log(response)
+                window.alert("Transazione eseguita:" + response.data)
+                navigate("/dashboard")
             })
 
-            window.alert("Transazione eseguita:" + response)
-            navigate("/dashboard")
         } catch (error) {
             window.alert("ERRORE:" + error)
         }
@@ -86,7 +88,7 @@ function FormTitolareDiritti() {
                     <div className="mb-3">
                         <label htmlFor="id" className="form-label">ID</label>
                         <input className="form-control" type="text" id="id" value={id}
-                               onChange={handleIdChange} placeholder="IpAddress"/>
+                               onChange={handleIdChange} placeholder="Id"/>
                     </div>
                     <div className="mb-3">
                         <label htmlFor="ipInput" className="form-label">Ip address</label>
