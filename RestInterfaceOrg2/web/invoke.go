@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"github.com/hyperledger/fabric-gateway/pkg/client"
 	"net/http"
+	"strings"
 )
 
 // Invoke handles chaincode invoke requests.
@@ -13,10 +14,14 @@ func (setup *OrgSetup) Invoke(w http.ResponseWriter, r *http.Request) {
 		fmt.Fprintf(w, "ParseForm() err: %s", err)
 		return
 	}
+
+	fmt.Println(r)
 	chainCodeName := r.FormValue("chaincodeid")
 	channelID := r.FormValue("channelid")
 	function := r.FormValue("function")
-	args := r.Form["args"]
+	argsString := r.FormValue("args")
+
+	args := strings.Split(argsString, ",")
 	fmt.Printf("channel: %s, chaincode: %s, function: %s, args: %s\n", channelID, chainCodeName, function, args)
 	network := setup.Gateway.GetNetwork(channelID)
 	contract := network.GetContract(chainCodeName)

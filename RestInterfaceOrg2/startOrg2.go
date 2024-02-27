@@ -22,6 +22,6 @@ func main() {
 	if err != nil {
 		fmt.Println("Error initializing setup for Org2: ", err)
 	}
-	web.Serve(web.OrgSetup(*org1Setup), 3002)
+	web.Serve(web.OrgSetup(*org1Setup), 3004)
 
 }
