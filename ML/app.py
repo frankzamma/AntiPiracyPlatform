@@ -2,21 +2,24 @@
 from flask import Flask, request, jsonify
 import tensorflow as tf
 import numpy as np
-import base64
-import io
 from PIL import Image
+import requests
+from io import BytesIO
 
 app = Flask(__name__)
 
 #Carica il modello salvato con joblib
-model = tf.keras.models.load_model('C:/Users/migli/Desktop/AntiPiracyPlatform/robust_classifier.h5')
+model = tf.keras.models.load_model('./robust_classifier.h5')
 
-@app.post("/predict")
+#@app.post("/predict")
+@app.route('/predict', methods=['GET'])
 def predict():
     try:
 
-        #Ottengo l'immagine dalla richiesta
-        image = Image.open(request.files['image'])
+        url = request.args.get('url')
+        print(url)
+        response = requests.get(url)
+        image = Image.open(BytesIO(response.content))
 
         #Preprocesso l'immagine
         processed_image = preprocess_image(image)
@@ -24,9 +27,9 @@ def predict():
         # Effettua la predizione
         prediction = model.predict(processed_image)
 
-        prediction_string = decode_sport(int(np.argmax(prediction[0])))
+        #prediction_string = decode_sport(int(np.argmax(prediction[0])))
 
-        return jsonify({'prediction': prediction_string})
+        return jsonify({'prediction': int(np.argmax(prediction[0]))})
 
     except Exception as e:
         return jsonify({'error': str(e)})
