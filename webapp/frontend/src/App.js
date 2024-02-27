@@ -10,6 +10,7 @@ import Logout from "./components/Logout";
 import Dashboard from "./components/Dashboard";
 import { AuthProvider } from "./components/AuthContext";
 import FormTitolareDiritti from "./components/Form/FormTitolareDiritti";
+import VisualizerRichiesteTitolare from "./components/VisualizerRichiesteTitolare";
 
 
 function App() {
@@ -19,8 +20,9 @@ function App() {
           <Routes>
             <Route path="/login" element={<Login />} />
             <Route path="/logout" element={<Logout />} />
-            <Route path="/dashboard" element={<Dashboard />} />
+            <Route path="/" element={<Dashboard />} />
             <Route path="/form-aggiungi-richiesta" element={<FormTitolareDiritti />} />
+            <Route path="/visulizza-richieste-effettuate" element={<VisualizerRichiesteTitolare />} />
             <Route path="*" element={<Navigate to="/login" replace />} />
           </Routes>
         </AuthProvider>
