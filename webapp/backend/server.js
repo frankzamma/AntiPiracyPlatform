@@ -2,9 +2,10 @@ const express = require("express");
 const mongoose = require("mongoose");
 const authRoutes = require("./routes/auth");
 const salvaRichiesta = require("./routes/SalvaRichiesta")
+const fileGetter = require("./routes/FileGetter")
+const getRequest = require("./routes/GetRequest")
 const cors = require("cors"); // Import the CORS middleware
-const User = require("./models/user")
-const bcrypt = require("bcrypt");
+
 
 require("dotenv").config();
 
@@ -24,6 +25,8 @@ app.use(cors()); // Use CORS middleware to allow requests from the frontend
 app.use(express.json());
 app.use("/api/auth", authRoutes); // All the routes defined in auth.js will be prefixed with /api/auth
 app.use(salvaRichiesta)
+app.use(fileGetter)
+app.use(getRequest)
 app.listen(PORT, () => {
     /*const username1 = "frank"
     const username2 = "amigli"

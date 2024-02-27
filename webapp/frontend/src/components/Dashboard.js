@@ -20,12 +20,14 @@ function Dashboard() {
                 <TitolareDeiServiziNav/> {/* Includi la Navbar qui */}
                 <h1>"Benvenuto utente di: Org1"</h1>
             </div>)
-    }else{
+    }else if(orgName == "Org2"){
         return (
             <div>
                 <OperatoreNav/> {/* Includi la Navbar qui */}
                 <h1>"Benvenuto utente di: Org2"</h1>
             </div>)
+    }else{
+        return <Navigate to="/login" replace />;
     }
 
 }
