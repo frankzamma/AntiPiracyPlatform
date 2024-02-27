@@ -39,27 +39,16 @@ router.post("/save-request", verifyTokenRequest, upload.single('file'),
 
         hash.setEncoding("hex")
 
-        console.log(hash)
         try {
-            /*const config = {
-                method: 'post',
-                url: 'https://example.com/upload', // Change this URL to your endpoint
-                headers: {
-                    'Content-Type': 'multipart/form-data',
-                },
-                data: formData,
-            };
 
-
-                // Send the POST request
-            const response = await axios(config);
-            console.log(response.data);*/
+            const response =
+                await axios.get("http://127.0.0.1:5000/predict?url=http://localhost:3001/files/" + req.file.filename)
 
 
 
 
             const args = id + "," + ipAddress + "," + description +
-                "," + fileHash + "," + path + "," + true + "," + "Org2" + "," + category
+                "," + fileHash + "," + "files/" + req.file.filename + "," + (response.prediction == category) + "," + "Org2" + "," + category
 
             let data = {
                 "channelid": "mychannel",
