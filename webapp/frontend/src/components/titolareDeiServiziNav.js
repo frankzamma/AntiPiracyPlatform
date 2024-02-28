@@ -5,7 +5,7 @@ const TitolareDeiServiziNav = () => {
     return (
         <nav className="navbar navbar-expand-lg bg-body-tertiary">
             <div className="container-fluid">
-                <a className="navbar-brand" href="#">Navbar</a>
+                <a className="navbar-brand" href="#">Anti Piracy Platform</a>
                 <button className="navbar-toggler" type="button" data-bs-toggle="collapse"
                         data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
                         aria-expanded="false" aria-label="Toggle navigation">
@@ -23,11 +23,8 @@ const TitolareDeiServiziNav = () => {
                             </a>
                             <ul className="dropdown-menu">
                                 <li><a className="dropdown-item" href="/form-aggiungi-richiesta">Inserisci nuova richiesta</a></li>
-                                <li><a className="dropdown-item" href="#">Verifica richieste passate</a></li>
-                                <li>
-                                    <hr className="dropdown-divider"/>
-                                </li>
-                                <li><a className="dropdown-item" href="#">Something else here</a></li>
+                                <li><a className="dropdown-item" href="/visulizza-richieste-effettuate">Verifica richieste passate</a></li>
+
                             </ul>
                         </li>
                     </ul>

@@ -5,7 +5,7 @@ const OperatoreNav = () => {
     return (
         <nav className="navbar navbar-expand-lg bg-body-tertiary">
             <div className="container-fluid">
-                <a className="navbar-brand" href="#">Navbar</a>
+                <a className="navbar-brand" href="#">Anti Piracy Platform</a>
                 <button className="navbar-toggler" type="button" data-bs-toggle="collapse"
                         data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
                         aria-expanded="false" aria-label="Toggle navigation">
@@ -24,10 +24,7 @@ const OperatoreNav = () => {
                             <ul className="dropdown-menu">
                                 <li><a className="dropdown-item" href="#">Visualizza richieste da confermare</a></li>
                                 <li><a className="dropdown-item" href="#">Visualizza richieste già confermate</a></li>
-                                <li>
-                                    <hr className="dropdown-divider"/>
-                                </li>
-                                <li><a className="dropdown-item" href="#">Something else here</a></li>
+
                             </ul>
                         </li>
                     </ul>
