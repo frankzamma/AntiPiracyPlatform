@@ -3,6 +3,7 @@ module RestInterfaceOrg2
 go 1.22rc2
 
 require (
+	github.com/golang-jwt/jwt/v5 v5.2.0
 	github.com/hyperledger/fabric-gateway v1.4.0
 	google.golang.org/grpc v1.62.0
 )
