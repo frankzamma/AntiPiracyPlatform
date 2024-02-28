@@ -62,7 +62,8 @@ router.post("/save-request", verifyTokenRequest, upload.single('file'),
                 const response = await axios.post('http://localhost:3003/invoke', data,
                     {
                         headers: {
-                            'Content-Type': 'application/x-www-form-urlencoded'
+                            'Content-Type': 'application/x-www-form-urlencoded',
+                            'authorization': token
                         }
                     })
                 console.log('Response:', response.data);
