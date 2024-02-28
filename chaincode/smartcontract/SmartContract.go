@@ -169,8 +169,6 @@ func (s *SmartContract) GetRichiestaById(ctx contractapi.TransactionContextInter
 }
 
 func (s *SmartContract) GetAllRequest(ctx contractapi.TransactionContextInterface) ([]*Request, error) {
-	// range query with empty string for startKey and endKey does an
-	// open-ended query of all request in the chaincode namespace.
 	resultsIterator, err := ctx.GetStub().GetStateByRange("", "")
 	if err != nil {
 		return nil, err
@@ -195,28 +193,14 @@ func (s *SmartContract) GetAllRequest(ctx contractapi.TransactionContextInterfac
 	return requests, nil
 }
 
-func (s *SmartContract) GetRequestConfirmedByOp(ctx contractapi.TransactionContextInterface, idOp string) (*OperatorRequest, error) {
-	// range query with empty string for startKey and endKey does an
-	// open-ended query of all request in the chaincode namespace.
-	resultsIterator, err := ctx.GetStub().GetStateByRange("", "")
+func (s *SmartContract) GetRequestByOp(ctx contractapi.TransactionContextInterface, idOp string) ([]*OperatorRequest, error) {
+	requests, err := s.GetAllRequest(ctx)
 	if err != nil {
 		return nil, err
 	}
-	defer resultsIterator.Close()
 
 	var operatorRequests []*OperatorRequest
-	for resultsIterator.HasNext() {
-		queryResponse, err := resultsIterator.Next()
-		if err != nil {
-			return nil, err
-		}
-
-		var request Request
-		err = json.Unmarshal(queryResponse.Value, &request)
-		if err != nil {
-			return nil, err
-		}
-
+	for _, request := range requests {
 		operatorRequest := OperatorRequest{
 			ID:          request.ID,
 			IpAddress:   request.IpAddress,
@@ -228,7 +212,37 @@ func (s *SmartContract) GetRequestConfirmedByOp(ctx contractapi.TransactionConte
 			Confirmed:   request.Confirmed[idOp],
 		}
 
-		operatorRequests = append(operatorRequest, &operatorRequest)
+		operatorRequests = append(operatorRequests, &operatorRequest)
+
+	}
+
+	return operatorRequests, nil
+
+}
+
+func (s *SmartContract) GetRequestNotConfirmedByOp(ctx contractapi.TransactionContextInterface, idOp string) ([]*OperatorRequest, error) {
+	requests, err := s.GetAllRequest(ctx)
+	if err != nil {
+		return nil, err
+	}
+
+	var operatorRequests []*OperatorRequest
+	for _, request := range requests {
+		if !request.Confirmed[idOp] {
+			operatorRequest := OperatorRequest{
+				ID:          request.ID,
+				IpAddress:   request.IpAddress,
+				Description: request.Description,
+				PathImage:   request.PathImage,
+				HashImage:   request.HashImage,
+				Verified:    request.Verified,
+				Category:    request.Category,
+				Confirmed:   request.Confirmed[idOp],
+			}
+
+			operatorRequests = append(operatorRequests, &operatorRequest)
+		}
+
 	}
 
 	return operatorRequests, nil
