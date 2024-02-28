@@ -22,6 +22,17 @@ type Request struct {
 	Confirmed   map[string]bool `json:"Confirmed"`
 }
 
+type OperatorRequest struct {
+	ID          string `json:"ID"`
+	IpAddress   string `json:"IpAddress"`
+	Description string `json:"Description"`
+	Category    int    `json:"Category"`
+	HashImage   string `json:"HashImages"`
+	PathImage   string `json:"PathImages"`
+	Verified    bool   `json:"Verified"`
+	Confirmed   bool   `json:"Confirmed"`
+}
+
 // InitLedger Funzione aggiunta per simulare la presenza di qualche richiesta [Metodo da eliminare in deployment]
 func (s *SmartContract) InitLedger(ctx contractapi.TransactionContextInterface) error {
 	m := make(map[string]bool)
@@ -182,4 +193,44 @@ func (s *SmartContract) GetAllRequest(ctx contractapi.TransactionContextInterfac
 	}
 
 	return requests, nil
+}
+
+func (s *SmartContract) GetRequestConfirmedByOp(ctx contractapi.TransactionContextInterface, idOp string) (*OperatorRequest, error) {
+	// range query with empty string for startKey and endKey does an
+	// open-ended query of all request in the chaincode namespace.
+	resultsIterator, err := ctx.GetStub().GetStateByRange("", "")
+	if err != nil {
+		return nil, err
+	}
+	defer resultsIterator.Close()
+
+	var operatorRequests []*OperatorRequest
+	for resultsIterator.HasNext() {
+		queryResponse, err := resultsIterator.Next()
+		if err != nil {
+			return nil, err
+		}
+
+		var request Request
+		err = json.Unmarshal(queryResponse.Value, &request)
+		if err != nil {
+			return nil, err
+		}
+
+		operatorRequest := OperatorRequest{
+			ID:          request.ID,
+			IpAddress:   request.IpAddress,
+			Description: request.Description,
+			PathImage:   request.PathImage,
+			HashImage:   request.HashImage,
+			Verified:    request.Verified,
+			Category:    request.Category,
+			Confirmed:   request.Confirmed[idOp],
+		}
+
+		operatorRequests = append(operatorRequest, &operatorRequest)
+	}
+
+	return operatorRequests, nil
+
 }
