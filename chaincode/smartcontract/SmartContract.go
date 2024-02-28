@@ -33,6 +33,10 @@ type OperatorRequest struct {
 	Confirmed   bool   `json:"Confirmed"`
 }
 
+func (r *Request) UpdateConfirmed(opId string) {
+	r.Confirmed[opId] = true
+}
+
 // InitLedger Funzione aggiunta per simulare la presenza di qualche richiesta [Metodo da eliminare in deployment]
 func (s *SmartContract) InitLedger(ctx contractapi.TransactionContextInterface) error {
 	m := make(map[string]bool)
@@ -136,8 +140,7 @@ func (s *SmartContract) Confirm(ctx contractapi.TransactionContextInterface, idR
 		return err
 	}
 
-	// Converte l'oggetto Conferma in JSON
-	richiesta.Confirmed[operatorID] = true
+	(richiesta).UpdateConfirmed(operatorID)
 
 	richiestaJson, err := json.Marshal(richiesta)
 	if err != nil {
