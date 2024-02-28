@@ -72,7 +72,7 @@ function FormTitolareDiritti() {
             }).then( response =>{
                 console.log(response)
                 window.alert("Transazione eseguita:" + response.data)
-                navigate("/dashboard")
+                navigate("/visulizza-richieste-effettuate")
             })
 
         } catch (error) {
