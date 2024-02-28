@@ -3,16 +3,31 @@ import {AuthContext} from "../AuthContext";
 import {Navigate, useNavigate} from "react-router-dom";
 import axios from "axios";
 
-import {string} from "prop-types";
+import {element, string} from "prop-types";
 import OperatoreNav from "../OperatoreNav";
 
 
 
 function  FormOperatore(){
     const { token, loading, orgName} = useContext(AuthContext);
-    const[IDrichiesta, setIDrichiesta] = useState("")
     const navigate = useNavigate();
-    const [Requests, setRequests] = useState(null)
+    const [Requests, setRequests] = useState([])
+
+    useEffect(() =>{
+        const storedToken = localStorage.getItem("token");
+        axios.get('http://localhost:3000/requests-not-confirmed-by-op', {
+            headers: {
+                'Authorization': `${storedToken}`
+            }
+        })
+            .then(response => {
+                console.log(response.data)
+                setRequests(JSON.parse(response.data.substring(10)));
+            }).catch(error => {
+            console.error('Errore durante la richiesta:', error);
+        });
+    }, [])
+
 
     if (loading) {
         return null;
@@ -26,48 +41,30 @@ function  FormOperatore(){
         return <h1>Non sei autorizzato ad accedere a questa pagina</h1>
     }
 
-    const handleIDrichiesta = (e) =>{
-        setIDrichiesta(e.target.value);
-    }
-
-    const handleSubmit = async (e) => {
-        e.preventDefault();
+    const confirmRequest = async (idRequest) => {
         try {
-            if (!image) {
-                return;
+
+            console.log(idRequest)
+            let button = document.getElementById("button" + idRequest)
+            button.remove()
+            let td = document.getElementById("td" + idRequest)
+            td.appendChild(document.createTextNode("Confirmed!"))
+
+            let formData = {
+                idRequest: idRequest
             }
 
-            const formData = new FormData()
-
-            formData.append("categoria", categoria)
-
-
-            const response = await axios.post("/save-request", formData, {
+            const response = await axios.post("/confirm-request", formData, {
                 headers: {
-                    'Content-Type': 'multipart/form-data'
+                    'authorization' : token
                 }
             })
-            navigate("/dashboard")
         } catch (error) {
             console.error("Send Failed", error);
         }
     };
 
-    useEffect(() => {
-        // Effettua una chiamata API per ottenere le richieste
-        const fetchRequests = async () => {
-            try {
-                const response = await axios.get("/get-requests");
-                setRequests(response.data);
-            } catch (error) {
-                console.error("Error fetching requests", error);
-            }
-        };
-
-        fetchRequests();
-    }, []);
-
-    const handleFormSubmit = async (requestData) => {
+       const handleFormSubmit = async (requestData) => {
         try {
             // Effettua una chiamata API per gestire la sottomissione della form
             const response = await axios.post("/handle-request", requestData); // Sostituisci con l'endpoint corretto
@@ -79,44 +76,51 @@ function  FormOperatore(){
 
     return (
         <div>
-            <h1>Richieste Operatore</h1>
-            <table>
-                <thead>
-                <tr>
-                    <th>Ip Address</th>
-                    <th>Description</th>
-                    <th>Image</th>
-                    <th>Categoria</th>
-                    <th>Action</th>
-                </tr>
-                </thead>
-                <tbody>
-                {requests.map((request) => (
-                    <tr key={request.id}>
-                        <td>{request.ipAddress}</td>
-                        <td>{request.description}</td>
-                        <td>
-                            <img src={request.imageUrl} alt="Request" style={{ maxWidth: "100px" }} />
-                        </td>
-                        <td>{request.categoria}</td>
-                        <td>
-                            <form onSubmit={(e) => {
-                                e.preventDefault();
-                                handleFormSubmit({ requestId: request.id, /* altre informazioni necessarie */ });
-                            }}>
-                                {/* Aggiungi qui i campi della form necessari */}
-                                <input type="hidden" value={request.id}></input>
-                                <button type="submit">Submit</button>
-                            </form>
-                        </td>
+            <OperatoreNav />
+            <div className="container">
+                <h1>Richieste Operatore</h1>
+                <table>
+                    <thead>
+                    <tr>
+                        <th>Ip Address</th>
+                        <th>Description</th>
+                        <th>Image</th>
+                        <th>Categoria</th>
+                        <th>Action</th>
                     </tr>
-                ))}
-                </tbody>
-            </table>
+                    </thead>
+                    <tbody>
+                    {Requests.map((request) => (
+                        <tr key={request.ID}>
+                            <td>
+                                {request.ID}</td>
+                            <td>
+                                {request.IpAddress}
+                            </td>
+                            <td>
+                                {request.Description}
+                            </td>
+                            <td>
+                                {request.Category}
+                            </td>
+                            <td>
+                                <img src={request.PathImages} alt="Request" style={{maxWidth: "100px"}}/>
+                            </td>
+                            <td>
+                                {request.Verified ? "True" : "False"}
+                            </td>
+                            <td id={"td" + request.ID}>
+                                <button id={"button" + request.ID} onClick={() => confirmRequest(request.ID)}>Conferma
+                                </button>
+                            </td>
+                        </tr>
+                    ))}
+                    </tbody>
+                </table>
+            </div>
+
         </div>
     );
-
-
 
 
 }
