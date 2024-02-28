@@ -4,6 +4,10 @@ const authRoutes = require("./routes/auth");
 const salvaRichiesta = require("./routes/SalvaRichiesta")
 const fileGetter = require("./routes/FileGetter")
 const getRequest = require("./routes/GetRequest")
+const getRequestNotConfirmedByOp = require("./routes/GetRequestNotConfirmedByOp")
+const confirmedRequest = require("./routes/ConfermaRichiesta")
+const getRequestByOp = require("./routes/GetRequestByOp")
+
 const cors = require("cors"); // Import the CORS middleware
 
 
@@ -27,6 +31,9 @@ app.use("/api/auth", authRoutes); // All the routes defined in auth.js will be p
 app.use(salvaRichiesta)
 app.use(fileGetter)
 app.use(getRequest)
+app.use(getRequestNotConfirmedByOp)
+app.use(getRequestByOp)
+app.use(confirmedRequest)
 app.listen(PORT, () => {
     /*const username1 = "frank"
     const username2 = "amigli"

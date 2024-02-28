@@ -11,6 +11,7 @@ import Dashboard from "./components/Dashboard";
 import { AuthProvider } from "./components/AuthContext";
 import FormTitolareDiritti from "./components/Form/FormTitolareDiritti";
 import VisualizerRichiesteTitolare from "./components/VisualizerRichiesteTitolare";
+import FormOperatore from "./components/Form/FormOperatore";
 
 
 function App() {
@@ -21,6 +22,7 @@ function App() {
             <Route path="/login" element={<Login />} />
             <Route path="/logout" element={<Logout />} />
             <Route path="/" element={<Dashboard />} />
+            <Route path="/board-conferma-richieste" element={<FormOperatore/>}/>
             <Route path="/form-aggiungi-richiesta" element={<FormTitolareDiritti />} />
             <Route path="/visulizza-richieste-effettuate" element={<VisualizerRichiesteTitolare />} />
             <Route path="*" element={<Navigate to="/login" replace />} />

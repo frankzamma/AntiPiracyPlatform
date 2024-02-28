@@ -28,6 +28,7 @@ const Login = () => {
             console.error("Authentication failed:", error);
             setToken(null);
             localStorage.removeItem("token");
+            sessionStorage.removeItem("orgName")
             if (error.response && error.response.data) {
                 setErrorMessage(error.response.data); // Set the error message if present in the error response
             } else {

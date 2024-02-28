@@ -11,12 +11,12 @@ function  VisualizzaRichiesteTitolare(){
 
     useEffect(() =>{
         const storedToken = localStorage.getItem("token");
+        console.log(storedToken)
         axios.get('http://localhost:3000/requests', {
             headers: {
-                'Authorization': `${storedToken}`
+                'authorization': `${storedToken}`
             }
-        })
-            .then(response => {
+        }).then(response => {
                 console.log(response.data)
                 setRequests(JSON.parse(response.data.substring(10)));
             }).catch(error => {

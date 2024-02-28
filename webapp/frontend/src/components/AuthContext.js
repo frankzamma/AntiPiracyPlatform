@@ -10,7 +10,7 @@ export const AuthProvider = ({ children }) => {
     useEffect(() => {
         const storedToken = localStorage.getItem("token");
         setToken(storedToken);
-        const storedOrg = localStorage.getItem("orgName");
+        const storedOrg = sessionStorage.getItem("orgName");
         setOrgName(storedOrg);
         setLoading(false); // Mark loading as complete after setting the token
     }, []);
