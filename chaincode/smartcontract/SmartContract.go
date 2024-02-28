@@ -122,7 +122,6 @@ func (s *SmartContract) AddRequest(ctx contractapi.TransactionContextInterface,
 }
 
 func (s *SmartContract) Confirm(ctx contractapi.TransactionContextInterface, idRichiesta string, operatorID string) error {
-
 	exists, err := s.RequestExists(ctx, idRichiesta)
 	if err != nil {
 		return err
