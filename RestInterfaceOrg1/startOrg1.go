@@ -1,9 +1,6 @@
 package main
 
-import (
-	"RestInterfaceOrg1/web"
-	"fmt"
-)
+import "fmt"
 
 func main() {
 	//Initialize setup for Org1

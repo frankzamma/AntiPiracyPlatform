@@ -12,6 +12,7 @@ import { AuthProvider } from "./components/AuthContext";
 import FormTitolareDiritti from "./components/Form/FormTitolareDiritti";
 import VisualizerRichiesteTitolare from "./components/VisualizerRichiesteTitolare";
 import FormOperatore from "./components/Form/FormOperatore";
+import VisualizerRichiesteConfermateOperatore from "./components/VisualizerRichiesteConfermateOperatore";
 
 
 function App() {
@@ -25,6 +26,7 @@ function App() {
             <Route path="/board-conferma-richieste" element={<FormOperatore/>}/>
             <Route path="/form-aggiungi-richiesta" element={<FormTitolareDiritti />} />
             <Route path="/visulizza-richieste-effettuate" element={<VisualizerRichiesteTitolare />} />
+            <Route path="/visulizza-richieste-confermate" element={<VisualizerRichiesteConfermateOperatore />} />
             <Route path="*" element={<Navigate to="/login" replace />} />
           </Routes>
         </AuthProvider>
