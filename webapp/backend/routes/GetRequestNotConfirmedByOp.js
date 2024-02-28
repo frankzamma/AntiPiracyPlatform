@@ -9,17 +9,16 @@ router.get("/requests-not-confirmed-by-op",verifyTokenRequest,
 
         if(user.OrgName != "Org2"){
             res.status(403).send("Not Authorized")
+        }else{
+            const opid = req.query.opid
+
+            const response =
+                await axios.get(
+                    "http://localhost:3003/query?" +
+                    "channelid=mychannel&chaincodeid=requestManage&function=GetRequestNotConfirmedByOp&args=" + opid)
+
+            res.status(200).send(response.data)
         }
-
-
-        const opid = req.params.opid
-
-        const response =
-            await axios.get(
-                "http://localhost:3003/query?" +
-                "channelid=mychannel&chaincodeid=requestManage&function=GetRequestByOp&args=" + opid)
-
-        res.status(200).send(response.data)
     })
 
 module.exports = router

@@ -15,7 +15,10 @@ function  FormOperatore(){
 
     useEffect(() =>{
         const storedToken = localStorage.getItem("token");
-        axios.get('http://localhost:3000/requests-not-confirmed-by-op', {
+        const orgNameStored = sessionStorage.getItem("orgName");
+
+        console.log(orgNameStored)
+        axios.get('http://localhost:3000/requests-not-confirmed-by-op?opid='+orgNameStored, {
             headers: {
                 'Authorization': `${storedToken}`
             }

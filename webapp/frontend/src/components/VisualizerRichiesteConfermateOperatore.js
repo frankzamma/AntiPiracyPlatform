@@ -53,7 +53,6 @@ function  VisualizzaRichiesteConfermateOperatore(){
                         <th>Categoria</th>
                         <th>Image</th>
                         <th>Verified</th>
-                        <th>Confirmed</th>
                     </tr>
                     </thead>
                     <tbody>

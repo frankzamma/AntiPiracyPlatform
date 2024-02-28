@@ -12,7 +12,7 @@ router.get("/requests-by-op",verifyTokenRequest,
         }
 
 
-        const opid = req.params.opid
+        const opid = req.query.opid
         /*const user = req.user
 
         console.log(user.OrgName)*/

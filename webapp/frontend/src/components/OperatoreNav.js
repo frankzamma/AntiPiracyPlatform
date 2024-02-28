@@ -22,8 +22,8 @@ const OperatoreNav = () => {
                                 Operazioni
                             </a>
                             <ul className="dropdown-menu">
-                                <li><a className="dropdown-item" href="#">Visualizza richieste da confermare</a></li>
-                                <li><a className="dropdown-item" href="#">Visualizza richieste già confermate</a></li>
+                                <li><a className="dropdown-item" href="/board-conferma-richieste">Visualizza richieste da confermare</a></li>
+                                <li><a className="dropdown-item" href="/visulizza-richieste-confermate">Visualizza richieste già confermate</a></li>
 
                             </ul>
                         </li>
