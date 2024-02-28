@@ -16,18 +16,42 @@ function Dashboard() {
 
     if(orgName == "Org1"){
         return (
-            <div>
-                <TitolareDeiServiziNav/> {/* Includi la Navbar qui */}
-                <h1>"Benvenuto utente di: Org1"</h1>
-            </div>)
-    }else if(orgName == "Org2"){
+            <div style={{textAlign: 'center'}}>
+                <TitolareDeiServiziNav/>
+                <div style={{marginTop: '20px'}}></div>
+                <div className="card" style={{display: 'inline-block', width: '50%', maxWidth: '400px'}}>
+                    <div className="card-header">
+                        <strong>Benvenuto!</strong>
+                    </div>
+                    <div className="card-body">
+                        <blockquote className="blockquote mb-0">
+                            <p>Benvenuto utente di: Org1</p>
+                        </blockquote>
+                    </div>
+                </div>
+            </div>
+        )
+    } else if (orgName == "Org2") {
         return (
-            <div>
-                <OperatoreNav/> {/* Includi la Navbar qui */}
-                <h1>"Benvenuto utente di: Org2"</h1>
-            </div>)
-    }else{
-        return <Navigate to="/login" replace />;
+            <div style={{textAlign: 'center'}}>
+                <OperatoreNav/>
+                <div style={{marginTop: '20px'}}></div>
+                <div className="card" style={{display: 'inline-block', width: '50%', maxWidth: '400px'}}>
+                    <div className="card-header">
+                        <strong>Benvenuto!</strong>
+                    </div>
+                    <div className="card-body">
+                        <blockquote className="blockquote mb-0">
+                            <p>Benvenuto utente di: Org2</p>
+                        </blockquote>
+                    </div>
+                </div>
+            </div>
+
+
+        )
+    } else {
+        return <Navigate to="/login" replace/>;
     }
 
 }
