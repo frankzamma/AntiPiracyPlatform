@@ -83,17 +83,18 @@ function FormTitolareDiritti() {
     return (
         <div>
             <TitolareDeiServiziNav></TitolareDeiServiziNav>
-            <div className="container" style={{backgroundColor: "white"}}>
+            <div style={{marginTop: '20px'}}></div>
+            <div className="container" style={{backgroundColor: "white", borderRadius: '10px', padding: '20px'}}>
                 <form onSubmit={handleSubmit}>
                     <div className="mb-3">
                         <label htmlFor="id" className="form-label">ID</label>
                         <input className="form-control" type="text" id="id" value={id}
-                               onChange={handleIdChange} placeholder="Id"/>
+                               onChange={handleIdChange} placeholder="ID"/>
                     </div>
                     <div className="mb-3">
-                        <label htmlFor="ipInput" className="form-label">Ip address</label>
+                        <label htmlFor="ipInput" className="form-label">IP Address</label>
                         <input className="form-control" type="text" id="ipInput" value={ipAddress}
-                               onChange={handleIpAddressChange} placeholder="IpAddress"/>
+                               onChange={handleIpAddressChange} placeholder="IP Address"/>
                     </div>
                     <div>
                         <label htmlFor="description" className="form-label">Description</label>
@@ -114,13 +115,13 @@ function FormTitolareDiritti() {
                             <option selected>Open this select menu</option>
                             <option value="0">Basket</option>
                             <option value="1">Boxing</option>
-                            <option value="2">Fencing</option>
-                            <option value="3">Football</option>
+                            <option value="2">Scherma</option>
+                            <option value="3">Calcio</option>
                             <option value="4">Formula 1</option>
                             <option value="5">Moto Gp</option>
-                            <option value="6">Swimming</option>
+                            <option value="6">Nuoto</option>
                             <option value="7">Tennis</option>
-                            <option value="8">Volleyball</option>
+                            <option value="8">Pallavolo</option>
                         </select>
                     </div>
                     <br/>
