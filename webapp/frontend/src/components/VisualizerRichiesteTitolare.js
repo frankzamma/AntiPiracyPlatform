@@ -42,15 +42,17 @@ function  VisualizzaRichiesteTitolare(){
     return (
         <div>
             <TitolareDeiServiziNav/>
+            <div style={{marginTop: '20px'}}></div>
             <div className="container">
-                <h1>Richieste Effettuate</h1>
-                <table>
+                <h1 className="text-center">Richieste Effettuate</h1>
+                <div style={{marginTop: '10px'}}></div>
+                <table className="table table-striped text-center">
                     <thead>
                     <tr>
                         <th>ID</th>
                         <th>Ip Address</th>
                         <th>Description</th>
-                        <th>Categoria</th>
+                        <th>Category</th>
                         <th>Image</th>
                         <th>Verified</th>
                         <th>Confirmed</th>
