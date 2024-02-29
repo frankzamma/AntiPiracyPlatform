@@ -94,7 +94,7 @@ function FormTitolareDiritti() {
                     <div className="mb-3">
                         <label htmlFor="ipInput" className="form-label">IP Address</label>
                         <input className="form-control" type="text" id="ipInput" value={ipAddress}
-                               onChange={handleIpAddressChange} placeholder="IP Address"/>
+                               onChange={handleIpAddressChange} placeholder="IP Address" title="Indirizzo Ipv4" pattern="[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}"/>
                     </div>
                     <div>
                         <label htmlFor="description" className="form-label">Description</label>
