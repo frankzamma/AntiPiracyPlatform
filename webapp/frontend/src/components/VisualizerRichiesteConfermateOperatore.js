@@ -12,7 +12,7 @@ function  VisualizzaRichiesteConfermateOperatore(){
 
     useEffect(() =>{
         const storedToken = localStorage.getItem("token");
-        const storedOrg = sessionStorage.getItem("OrgName");
+        const storedOrg = sessionStorage.getItem("orgName");
 
         console.log(storedToken)
         axios.get('http://localhost:3000/requests-by-op?opid=' + storedOrg, {
