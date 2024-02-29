@@ -20,7 +20,7 @@ router.get("/requests-by-op",verifyTokenRequest,
         const response =
             await axios.get(
                 "http://localhost:3004/query?" +
-                "channelid=mychannel&chaincodeid=requestManage&function=GetRequestNotConfirmedByOp&args=" + opid,
+                "channelid=mychannel&chaincodeid=requestManage&function=GetRequestByOp&args=" + opid,
                 {
                     headers: {
                         'authorization': token
