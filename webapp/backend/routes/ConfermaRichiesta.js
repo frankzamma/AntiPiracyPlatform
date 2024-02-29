@@ -25,10 +25,13 @@ router.post("/confirm-request", verifyTokenRequest,
 
 
         try {
+            const token = req.header("Authorization");
+
             const response = await axios.post('http://localhost:3003/invoke', data,
                 {
                     headers: {
-                        'Content-Type': 'application/x-www-form-urlencoded'
+                        'Content-Type': 'application/x-www-form-urlencoded',
+                        'authorization': token
                     }
                 })
             console.log('Response:', response.data);

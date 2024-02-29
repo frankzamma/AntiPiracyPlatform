@@ -12,7 +12,13 @@ router.get("/requests",verifyTokenRequest,
 
     const response =
             await axios.get(
-                "http://localhost:3003/query?channelid=mychannel&chaincodeid=requestManage&function=GetAllRequest")
+                "http://localhost:3003/query?channelid=mychannel&chaincodeid=requestManage&function=GetAllRequest",
+                {
+                    headers: {
+                        'authorization': token
+                    }
+                }
+                )
 
         res.status(200).send(response.data)
     })
