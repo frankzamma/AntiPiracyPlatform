@@ -46,7 +46,7 @@ func (setup *OrgSetup) Invoke(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	if claims["OrgName"].(string) == "Org1" {
+	if claims["OrgName"].(string) == "Org2" {
 		chainCodeName := r.FormValue("chaincodeid")
 		channelID := r.FormValue("channelid")
 		function := r.FormValue("function")
