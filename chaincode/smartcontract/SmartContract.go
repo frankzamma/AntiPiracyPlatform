@@ -39,7 +39,6 @@ func (r *Request) UpdateConfirmed(opId string) {
 	r.Confirmed[opId] = true
 }
 
-// RequestExists returns true when request with given ID exists in world state
 func (s *SmartContract) RequestExists(ctx contractapi.TransactionContextInterface, id string) (bool, error) {
 	requestJSON, err := ctx.GetStub().GetState(id)
 	if err != nil {
