@@ -1,4 +1,4 @@
-import {useContext, useState} from "react";
+import React, {useContext, useState} from "react";
 import {AuthContext} from "../AuthContext";
 import {Navigate, useNavigate} from "react-router-dom";
 import axios from "axios";
@@ -13,6 +13,7 @@ function FormTitolareDiritti() {
     const [categoria, setCategoria] = useState("");
     const [id, setId] = useState("")
     const navigate = useNavigate();
+    const [errorMessage, setErrorMessage] = useState(null);
 
     if (loading) {
         return null;
@@ -71,11 +72,24 @@ function FormTitolareDiritti() {
                 }
             }).then( response =>{
                 console.log(response)
-                window.alert("Transazione eseguita:" + response.data)
-                navigate("/visulizza-richieste-effettuate")
+
+                if(response.data.includes("Error")){
+                    setErrorMessage(response.data);
+                    window.scrollTo(0, 0);
+                }else{
+                    window.alert("Transazione eseguita:" + response.data)
+                    navigate("/visulizza-richieste-effettuate")
+                }
+
             })
 
         } catch (error) {
+            if (error.response && error.response.data) {
+                setErrorMessage(error.response.data);
+            } else {
+                setErrorMessage("Errore inaspettato. Riprovare");
+            }
+
             window.alert("ERRORE:" + error)
         }
     };
@@ -83,6 +97,8 @@ function FormTitolareDiritti() {
     return (
         <div>
             <TitolareDeiServiziNav></TitolareDeiServiziNav>
+
+            {errorMessage && <div className="alert alert-danger">{errorMessage}</div>}{" "}
             <div style={{marginTop: '20px'}}></div>
             <div className="container" style={{backgroundColor: "white", borderRadius: '10px', padding: '20px'}}>
                 <form onSubmit={handleSubmit}>

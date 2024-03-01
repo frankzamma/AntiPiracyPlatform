@@ -7,7 +7,7 @@ import "../style/Login.css"
 const Login = () => {
     const [username, setUsername] = useState("");
     const [password, setPassword] = useState("");
-    const [errorMessage, setErrorMessage] = useState(null); // New state for handling error messages
+    const [errorMessage, setErrorMessage] = useState(null);
     const { setToken } = useContext(AuthContext);
     const { setOrgName } = useContext(AuthContext);
     const navigate = useNavigate();
@@ -30,9 +30,9 @@ const Login = () => {
             localStorage.removeItem("token");
             sessionStorage.removeItem("orgName")
             if (error.response && error.response.data) {
-                setErrorMessage(error.response.data); // Set the error message if present in the error response
+                setErrorMessage(error.response.data);
             } else {
-                setErrorMessage("An unexpected error occurred. Please try again.");
+                setErrorMessage("Errore inaspettato. Riprovare");
             }
         }
     };
@@ -40,7 +40,8 @@ const Login = () => {
     return (
         <div className="container text-center">
             <div className="row align-items-center"></div>
-            {errorMessage && <div style={{ color: "red" }}>{errorMessage}</div>}{" "}
+            <br/>
+            {errorMessage && <div className="alert alert-warning">{errorMessage}</div>}{" "}
             <div className="row align-items-center">
                 <form className="login-form" onSubmit={handleSubmit}>
                     <h2>Login</h2>
@@ -50,6 +51,7 @@ const Login = () => {
                            onChange={(e) => setUsername(e.target.value)}
                            placeholder="Username"
                            type="text"
+                           required
                     />
                     <br/>
                     <input className="form-control"
@@ -57,6 +59,7 @@ const Login = () => {
                            value={password}
                            onChange={(e) => setPassword(e.target.value)}
                            placeholder="Password"
+                           required
                     />
                     <br/>
                     <button type="submit">Login</button>
