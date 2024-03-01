@@ -89,30 +89,31 @@ function FormTitolareDiritti() {
                     <div className="mb-3">
                         <label htmlFor="id" className="form-label">ID</label>
                         <input className="form-control" type="text" id="id" value={id}
-                               onChange={handleIdChange} placeholder="ID"/>
+                               onChange={handleIdChange} placeholder="ID" required/>
                     </div>
                     <div className="mb-3">
                         <label htmlFor="ipInput" className="form-label">IP Address</label>
                         <input className="form-control" type="text" id="ipInput" value={ipAddress}
-                               onChange={handleIpAddressChange} placeholder="IP Address" title="Indirizzo Ipv4" pattern="[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}"/>
+                               onChange={handleIpAddressChange} placeholder="IP Address" title="Indirizzo Ipv4"
+                               pattern="[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}" required/>
                     </div>
                     <div>
                         <label htmlFor="description" className="form-label">Description</label>
                         <input className="form-control" type="text" id="description" value={description}
                                onChange={handleDscriptionChange}
-                               placeholder="description"/>
+                               placeholder="description" required/>
                     </div>
 
                     <div className="mb-3">
                         <label htmlFor="formFile" className="form-label">Immagini</label>
-                        <input className="form-control" type="file" onChange={handleImagesChange}/>
+                        <input className="form-control" type="file" onChange={handleImagesChange} accept="image/*" required/>
                     </div>
 
                     <div className="mb-3">
                         <label htmlFor="formFile" className="form-label">Categoria</label>
                         <select className="form-select" onChange={handleCategoriaChange}
-                                aria-label="Default select example">
-                            <option selected>Open this select menu</option>
+                                aria-label="Default select example" required>
+                            <option value="" selected>Open this select menu</option>
                             <option value="0">Basket</option>
                             <option value="1">Boxing</option>
                             <option value="2">Scherma</option>
@@ -125,7 +126,6 @@ function FormTitolareDiritti() {
                         </select>
                     </div>
                     <br/>
-
                     <button>Upload</button>
                 </form>
 

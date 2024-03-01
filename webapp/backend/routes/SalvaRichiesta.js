@@ -6,6 +6,22 @@ const path = require('path')
 const {verifyToken, verifyTokenRequest} = require("../utils/jwtHelper");
 const fs = require('fs')
 const crypto = require('crypto');
+const mime = require('mime-types');
+
+
+const fileFilter = async (req, file, cb) =>{
+    try {
+        const mimeType = mime.lookup(file.originalname); // Ottieni il tipo MIME dal nome del file
+
+        if (mimeType && mimeType.startsWith('image/')) {
+            cb(null, true);
+        } else {
+            cb(new Error('FileType non accettato'), false);
+        }
+    } catch (error) {
+        cb(error, false);
+    }
+}
 
 
 const storage = multer.diskStorage({
@@ -17,17 +33,39 @@ const storage = multer.diskStorage({
     }
 });
 
-const upload = multer({ storage: storage });
+const upload = multer(
+    { storage: storage,
+            fileFilter: fileFilter
+    });
 
 router.post("/save-request", verifyTokenRequest, upload.single('file'),
     async (req, res) =>{
 
         let token = req.header("Authorization");
         let path = req.file.path
+
+        if(path === undefined || path === null){
+            res.status(400).send("Errore nei parametri!")
+        }
+
         let id =  req.body.id
+
+        if(id === undefined || id === null){
+            res.status(400).send("Errore nei parametri!")
+        }
         let ipAddress = req.body.ipAddress
+        const ipPattern = /[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}/
+
+        if(ipAddress === undefined || ipAddress === null || !(ipPattern.test(ipAddress))){
+            res.status(400).send("Errore nei parametri!")
+        }
+
         let description = req.body.description
+
         let category = req.body.categoria
+        if(category===undefined || category===null || !(category >=0 && category<=8)){
+            res.status(400).send("Errore nei parametri!")
+        }
 
 
         const fileData = fs.readFileSync(path);
