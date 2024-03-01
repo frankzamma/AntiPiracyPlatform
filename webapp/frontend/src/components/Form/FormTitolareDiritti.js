@@ -90,7 +90,7 @@ function FormTitolareDiritti() {
                 setErrorMessage("Errore inaspettato. Riprovare");
             }
 
-            window.alert("ERRORE:" + error)
+            console.log("ERRORE:" + error)
         }
     };
 

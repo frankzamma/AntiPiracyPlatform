@@ -8,6 +8,7 @@ import OperatoreNav from "./OperatoreNav";
 function  VisualizzaRichiesteConfermateOperatore(){
     const {token, loading, orgName} = useContext(AuthContext);
     const [requests, setRequests] = useState([])
+    const [errorMessage, setErrorMessage] = useState(null);
 
 
     useEffect(() =>{
@@ -21,9 +22,20 @@ function  VisualizzaRichiesteConfermateOperatore(){
             }
         }).then(response => {
                 console.log(response.data)
-                setRequests(JSON.parse(response.data.substring(10)));
+                if(response.data.includes("Error")){
+                    setErrorMessage(response.data);
+                    window.scrollTo(0, 0);
+                }else{
+                    setRequests(JSON.parse(response.data.substring(10)));
+                }
             }).catch(error => {
-            console.error('Errore durante la richiesta:', error);
+            if (error.response && error.response.data) {
+                setErrorMessage(error.response.data);
+            } else {
+                setErrorMessage("Errore inaspettato. Riprovare");
+            }
+
+            console.log("ERRORE:" + error)
         });
     }, [])
     if (loading) {
