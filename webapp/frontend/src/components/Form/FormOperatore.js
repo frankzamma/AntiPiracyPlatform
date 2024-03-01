@@ -89,6 +89,7 @@ function  FormOperatore(){
                         <th>Description</th>
                         <th>Image</th>
                         <th>Categoria</th>
+                        <th>SenderOrganizationID</th>
                         <th>Action</th>
                     </tr>
                     </thead>
@@ -111,6 +112,9 @@ function  FormOperatore(){
                             </td>
                             <td>
                                 {request.Verified ? "True" : "False"}
+                            </td>
+                            <td>
+                                {request.SenderOrganizationID}
                             </td>
                             <td id={"td" + request.ID}>
                                 <button id={"button" + request.ID} onClick={() => confirmRequest(request.ID)}>Conferma

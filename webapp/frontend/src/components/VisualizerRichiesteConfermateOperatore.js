@@ -53,6 +53,7 @@ function  VisualizzaRichiesteConfermateOperatore(){
                         <th>Categoria</th>
                         <th>Image</th>
                         <th>Verified</th>
+                        <th>SenderOrganization</th>
                     </tr>
                     </thead>
                     <tbody>
@@ -74,6 +75,9 @@ function  VisualizzaRichiesteConfermateOperatore(){
                             </td>
                             <td>
                                 {request.Verified ? "True" : "False"}
+                            </td>
+                            <td>
+                                {request.SenderOrganizationID}
                             </td>
                         </tr>
                     ))}

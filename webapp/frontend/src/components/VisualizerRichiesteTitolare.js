@@ -55,6 +55,7 @@ function  VisualizzaRichiesteTitolare(){
                         <th>Category</th>
                         <th>Image</th>
                         <th>Verified</th>
+                        <th>SenderOrganization</th>
                         <th>Confirmed</th>
                     </tr>
                     </thead>
@@ -77,6 +78,9 @@ function  VisualizzaRichiesteTitolare(){
                             </td>
                             <td>
                                 {request.Verified ? "True" : "False"}
+                            </td>
+                            <td>
+                                {request.SenderOrganizationID}
                             </td>
                             <td>
                                 {Object.entries(request.Confirmed).map(([key, value]) =>
