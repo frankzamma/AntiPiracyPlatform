@@ -1,4 +1,4 @@
-import {useContext, useState, useEffect} from "react";
+import React, {useContext, useState, useEffect} from "react";
 import {AuthContext} from "./AuthContext";
 import {Navigate, useNavigate} from "react-router-dom";
 import axios from "axios";
@@ -55,6 +55,9 @@ function  VisualizzaRichiesteConfermateOperatore(){
         <div>
             <OperatoreNav/>
             <div className="container">
+
+                {errorMessage && <div className="alert alert-warning">{errorMessage}</div>}{" "}
+
                 <h1>Richieste Confermate</h1>
                 <table>
                     <thead>

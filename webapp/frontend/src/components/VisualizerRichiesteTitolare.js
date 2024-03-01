@@ -1,4 +1,4 @@
-import {useContext, useState, useEffect} from "react";
+import React, {useContext, useState, useEffect} from "react";
 import {AuthContext} from "./AuthContext";
 import {Navigate, useNavigate} from "react-router-dom";
 import axios from "axios";
@@ -7,6 +7,7 @@ import TitolareDeiServiziNav from "./titolareDeiServiziNav";
 function  VisualizzaRichiesteTitolare(){
     const {token, loading, orgName} = useContext(AuthContext);
     const [requests, setRequests] = useState([])
+    const [errorMessage, setErrorMessage] = useState(null);
 
 
     useEffect(() =>{
@@ -18,8 +19,20 @@ function  VisualizzaRichiesteTitolare(){
             }
         }).then(response => {
                 console.log(response.data)
-                setRequests(JSON.parse(response.data.substring(10)));
+
+                if(response.data.includes("Error")){
+                    setErrorMessage(response.data);
+                    window.scrollTo(0, 0);
+                }else{
+                    setRequests(JSON.parse(response.data.substring(10)));
+                }
             }).catch(error => {
+
+            if (error.response && error.response.data) {
+                setErrorMessage(error.response.data);
+            } else {
+                setErrorMessage("Errore inaspettato. Riprovare");
+            }
             console.error('Errore durante la richiesta:', error);
         });
     }, [])
@@ -36,14 +49,13 @@ function  VisualizzaRichiesteTitolare(){
     }
 
 
-        // Effettua una richiesta GET per ottenere i post
-
-
     return (
         <div>
             <TitolareDeiServiziNav/>
             <div style={{marginTop: '20px'}}></div>
             <div className="container">
+                {errorMessage && <div className="alert alert-warning">{errorMessage}</div>}{" "}
+
                 <h1 className="text-center">Richieste Effettuate</h1>
                 <div style={{marginTop: '10px'}}></div>
                 <table className="table table-striped text-center">
