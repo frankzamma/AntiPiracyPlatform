@@ -12,68 +12,31 @@ type SmartContract struct {
 }
 
 type Request struct {
-	ID          string          `json:"ID"`
-	IpAddress   string          `json:"IpAddress"`
-	Description string          `json:"Description"`
-	Category    int             `json:"Category"`
-	HashImage   string          `json:"HashImages"`
-	PathImage   string          `json:"PathImages"`
-	Verified    bool            `json:"Verified"`
-	Confirmed   map[string]bool `json:"Confirmed"`
+	ID                   string          `json:"ID"`
+	IpAddress            string          `json:"IpAddress"`
+	Description          string          `json:"Description"`
+	Category             int             `json:"Category"`
+	HashImage            string          `json:"HashImages"`
+	PathImage            string          `json:"PathImages"`
+	Verified             bool            `json:"Verified"`
+	Confirmed            map[string]bool `json:"Confirmed"`
+	SenderOrganizationID string          `json:"SenderOrganizationID"`
 }
 
 type OperatorRequest struct {
-	ID          string `json:"ID"`
-	IpAddress   string `json:"IpAddress"`
-	Description string `json:"Description"`
-	Category    int    `json:"Category"`
-	HashImage   string `json:"HashImages"`
-	PathImage   string `json:"PathImages"`
-	Verified    bool   `json:"Verified"`
-	Confirmed   bool   `json:"Confirmed"`
+	ID                   string `json:"ID"`
+	IpAddress            string `json:"IpAddress"`
+	Description          string `json:"Description"`
+	Category             int    `json:"Category"`
+	HashImage            string `json:"HashImages"`
+	PathImage            string `json:"PathImages"`
+	Verified             bool   `json:"Verified"`
+	Confirmed            bool   `json:"Confirmed"`
+	SenderOrganizationID string `json:"SenderOrganizationID"`
 }
 
 func (r *Request) UpdateConfirmed(opId string) {
 	r.Confirmed[opId] = true
-}
-
-// InitLedger Funzione aggiunta per simulare la presenza di qualche richiesta [Metodo da eliminare in deployment]
-func (s *SmartContract) InitLedger(ctx contractapi.TransactionContextInterface) error {
-	m := make(map[string]bool)
-
-	m["Org2"] = false
-
-	requests := []Request{
-		{ID: "01",
-			IpAddress:   "192.168.0.1",
-			Description: "Flusso video che mostra la partita Napoli-Salernitana",
-			HashImage:   "HashImg",
-			PathImage:   "fakepath",
-			Confirmed:   m,
-			Verified:    false,
-		},
-		{ID: "02",
-			IpAddress:   "192.168.0.2",
-			Description: "Flusso video che mostra la partita Milan-Salernitana",
-			HashImage:   "HashImg",
-			Confirmed:   m,
-			PathImage:   "fakepath",
-			Verified:    false,
-		},
-	}
-
-	for _, request := range requests {
-		requestJSON, err := json.Marshal(request)
-		if err != nil {
-			return err
-		}
-
-		err = ctx.GetStub().PutState(request.ID, requestJSON)
-		if err != nil {
-			return fmt.Errorf("failed to put to world state. %v", err)
-		}
-	}
-	return nil
 }
 
 // RequestExists returns true when request with given ID exists in world state
@@ -88,7 +51,7 @@ func (s *SmartContract) RequestExists(ctx contractapi.TransactionContextInterfac
 
 func (s *SmartContract) AddRequest(ctx contractapi.TransactionContextInterface,
 	id string, ipAddress string, description string, hashImage string, pathImage string, verified bool,
-	actualOperatorsString string, category int) error {
+	actualOperatorsString string, category int, requesterID string) error {
 
 	exists, err := s.RequestExists(ctx, id)
 	if err != nil {
@@ -107,13 +70,14 @@ func (s *SmartContract) AddRequest(ctx contractapi.TransactionContextInterface,
 	}
 
 	request := Request{ID: id,
-		IpAddress:   ipAddress,
-		Description: description,
-		PathImage:   pathImage,
-		HashImage:   hashImage,
-		Verified:    verified,
-		Category:    category,
-		Confirmed:   mapOp,
+		IpAddress:            ipAddress,
+		Description:          description,
+		PathImage:            pathImage,
+		HashImage:            hashImage,
+		Verified:             verified,
+		Category:             category,
+		Confirmed:            mapOp,
+		SenderOrganizationID: requesterID,
 	}
 
 	requestJSON, err := json.Marshal(request)
@@ -204,14 +168,15 @@ func (s *SmartContract) GetRequestByOp(ctx contractapi.TransactionContextInterfa
 	var operatorRequests []*OperatorRequest
 	for _, request := range requests {
 		operatorRequest := OperatorRequest{
-			ID:          request.ID,
-			IpAddress:   request.IpAddress,
-			Description: request.Description,
-			PathImage:   request.PathImage,
-			HashImage:   request.HashImage,
-			Verified:    request.Verified,
-			Category:    request.Category,
-			Confirmed:   request.Confirmed[idOp],
+			ID:                   request.ID,
+			IpAddress:            request.IpAddress,
+			Description:          request.Description,
+			PathImage:            request.PathImage,
+			HashImage:            request.HashImage,
+			Verified:             request.Verified,
+			Category:             request.Category,
+			Confirmed:            request.Confirmed[idOp],
+			SenderOrganizationID: request.SenderOrganizationID,
 		}
 
 		operatorRequests = append(operatorRequests, &operatorRequest)
@@ -232,14 +197,15 @@ func (s *SmartContract) GetRequestNotConfirmedByOp(ctx contractapi.TransactionCo
 	for _, request := range requests {
 		if !request.Confirmed[idOp] {
 			operatorRequest := OperatorRequest{
-				ID:          request.ID,
-				IpAddress:   request.IpAddress,
-				Description: request.Description,
-				PathImage:   request.PathImage,
-				HashImage:   request.HashImage,
-				Verified:    request.Verified,
-				Category:    request.Category,
-				Confirmed:   request.Confirmed[idOp],
+				ID:                   request.ID,
+				IpAddress:            request.IpAddress,
+				Description:          request.Description,
+				PathImage:            request.PathImage,
+				HashImage:            request.HashImage,
+				Verified:             request.Verified,
+				Category:             request.Category,
+				Confirmed:            request.Confirmed[idOp],
+				SenderOrganizationID: request.SenderOrganizationID,
 			}
 
 			operatorRequests = append(operatorRequests, &operatorRequest)
