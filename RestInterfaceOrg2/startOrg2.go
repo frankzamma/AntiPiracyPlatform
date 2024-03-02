@@ -6,8 +6,8 @@ import (
 )
 
 func main() {
-	cryptoPath := "C:\\Users\\frank\\Desktop\\ProgettoSicurezzaDeiDati\\fabric-samples\\test-network\\organizations\\peerOrganizations\\"
-	//cryptoPath := "C:\\Users\\migli\\Desktop\\ProgettoSicurezza\\fabric-samples\\test-network\\organizations\\peerOrganizations\\"
+	//cryptoPath := "C:\\Users\\frank\\Desktop\\ProgettoSicurezzaDeiDati\\fabric-samples\\test-network\\organizations\\peerOrganizations\\"
+	cryptoPath := "C:\\Users\\migli\\Desktop\\ProgettoSicurezza\\fabric-samples\\test-network\\organizations\\peerOrganizations\\"
 	org2Config := web.OrgSetup{
 		OrgName:      "Org2",
 		MSPID:        "Org2MSP",

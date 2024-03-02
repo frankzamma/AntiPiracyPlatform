@@ -54,12 +54,15 @@ function  VisualizzaRichiesteConfermateOperatore(){
     return (
         <div>
             <OperatoreNav/>
+            <div style={{marginTop: '20px'}}></div>
             <div className="container">
 
                 {errorMessage && <div className="alert alert-warning">{errorMessage}</div>}{" "}
 
-                <h1>Richieste Confermate</h1>
-                <table>
+                <div style={{marginTop: '20px'}}></div>
+                <h1 className="text-center">Richieste Confermate</h1>
+                <div style={{marginTop: '10px'}}></div>
+                <table className="table table-striped text-center">
                     <thead>
                     <tr>
                         <th>ID</th>
