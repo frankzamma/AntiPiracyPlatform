@@ -101,11 +101,14 @@ function  FormOperatore(){
 
     return (
         <div>
-            <OperatoreNav />
+            <OperatoreNav/>
+            <div style={{marginTop: '20px'}}></div>
             <div className="container">
-                <h1>Richieste Operatore</h1>
                 {errorMessage && <div className="alert alert-warning">{errorMessage}</div>}{" "}
-                <table>
+                <div style={{marginTop: '20px'}}></div>
+                <h1 className="text-center">Richieste Operatore</h1>
+                <div style={{marginTop: '10px'}}></div>
+                <table className="table table-striped text-center">
                     <thead>
                     <tr>
                         <th>Ip Address</th>
