@@ -3,6 +3,7 @@ import {AuthContext} from "./AuthContext";
 import {Navigate, useNavigate} from "react-router-dom";
 import axios from "axios";
 import TitolareDeiServiziNav from "./titolareDeiServiziNav";
+import getCategoryName from "./CategoryNameConverter";
 
 function  VisualizzaRichiesteTitolare(){
     const {token, loading, orgName} = useContext(AuthContext);
@@ -83,7 +84,7 @@ function  VisualizzaRichiesteTitolare(){
                                 {request.Description}
                             </td>
                             <td>
-                                {request.Category}
+                                {getCategoryName(request.Category)}
                             </td>
                             <td>
                                 <img src={request.PathImages} alt="Request" style={{maxWidth: "100px"}}/>

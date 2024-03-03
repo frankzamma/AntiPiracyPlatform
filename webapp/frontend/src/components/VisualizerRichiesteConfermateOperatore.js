@@ -4,6 +4,7 @@ import {Navigate, useNavigate} from "react-router-dom";
 import axios from "axios";
 import TitolareDeiServiziNav from "./titolareDeiServiziNav";
 import OperatoreNav from "./OperatoreNav";
+import getCategoryName from "./CategoryNameConverter";
 
 function  VisualizzaRichiesteConfermateOperatore(){
     const {token, loading, orgName} = useContext(AuthContext);
@@ -86,8 +87,7 @@ function  VisualizzaRichiesteConfermateOperatore(){
                                 {request.Description}
                             </td>
                             <td>
-                                {request.Category}
-                            </td>
+                                {getCategoryName(request.Category)}                            </td>
                             <td>
                                 <img src={request.PathImages} alt="Request" style={{maxWidth: "100px"}}/>
                             </td>
