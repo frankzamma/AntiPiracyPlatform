@@ -5,6 +5,7 @@ import axios from "axios";
 
 import {element, string} from "prop-types";
 import OperatoreNav from "../OperatoreNav";
+import getCategoryName from "../CategoryNameConverter";
 
 
 
@@ -131,7 +132,7 @@ function  FormOperatore(){
                                 {request.Description}
                             </td>
                             <td>
-                                {request.Category}
+                                {getCategoryName(request.Category)}
                             </td>
                             <td>
                                 <img src={request.PathImages} alt="Request" style={{maxWidth: "100px"}}/>

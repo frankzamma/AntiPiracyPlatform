@@ -3,12 +3,13 @@ package main
 import (
 	"RestInterfaceOrg1/web"
 	"fmt"
+	"github.com/joho/godotenv"
 )
 
 func main() {
-	//Initialize setup for Org1
-	cryptoPath := "C:\\Users\\frank\\Desktop\\ProgettoSicurezzaDeiDati\\fabric-samples\\test-network\\organizations\\peerOrganizations\\"
-	//cryptoPath := "C:\\Users\\migli\\Desktop\\ProgettoSicurezza\\fabric-samples\\test-network\\organizations\\peerOrganizations\\"
+	var envs map[string]string
+	envs, err := godotenv.Read(".env")
+	cryptoPath := envs["TEST_NETWORK_CA"]
 	org1Config := web.OrgSetup{
 		OrgName:      "Org1",
 		MSPID:        "Org1MSP",

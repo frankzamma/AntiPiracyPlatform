@@ -14,6 +14,8 @@ github.com/hyperledger/fabric-gateway v1.4.0 h1:wwCwujtOWNkRYQ32Uq9PfnJTOwHj5CgS
 github.com/hyperledger/fabric-gateway v1.4.0/go.mod h1:VqJ9AL9kEm4UQQ2JhHqG92Btw4tpjKE8N/uhlsQdEA4=
 github.com/hyperledger/fabric-protos-go-apiv2 v0.2.1 h1:iuCabkxwT1WZ06uREDjYPrtLsGFX05hwbpERYfmcatM=
 github.com/hyperledger/fabric-protos-go-apiv2 v0.2.1/go.mod h1:2pq0ui6ZWA0cC8J+eCErgnMDCS1kPOEYVY+06ZAK0qE=
+github.com/joho/godotenv v1.5.1 h1:7eLL/+HRGLY0ldzfGMeQkb7vMd0as4CfYvUVzLqw0N0=
+github.com/joho/godotenv v1.5.1/go.mod h1:f4LDr5Voq0i2e/R5DDNOoa2zzDfwtkZa6DnEwAbqwq4=
 github.com/miekg/pkcs11 v1.1.1 h1:Ugu9pdy6vAYku5DEpVWVFPYnzV+bxB+iRdbuFSu7TvU=
 github.com/miekg/pkcs11 v1.1.1/go.mod h1:XsNlhZGX73bx86s2hdc/FuaLm2CPZJemRLMA+WTFxgs=
 github.com/pmezard/go-difflib v1.0.0 h1:4DBwDE0NGyQoBHbLQYPwSUPoCMWR5BEzIk/f1lZbAQM=
