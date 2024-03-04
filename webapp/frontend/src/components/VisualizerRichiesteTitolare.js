@@ -67,8 +67,6 @@ function  VisualizzaRichiesteTitolare(){
                         <th>Description</th>
                         <th>Category</th>
                         <th>Image</th>
-                        <th>Verified</th>
-                        <th>SenderOrganization</th>
                         <th>Confirmed</th>
                     </tr>
                     </thead>
@@ -88,12 +86,6 @@ function  VisualizzaRichiesteTitolare(){
                             </td>
                             <td>
                                 <img src={request.PathImages} alt="Request" style={{maxWidth: "100px"}}/>
-                            </td>
-                            <td>
-                                {request.Verified ? "True" : "False"}
-                            </td>
-                            <td>
-                                {request.SenderOrganizationID}
                             </td>
                             <td>
                                 {Object.entries(request.Confirmed).map(([key, value]) =>
