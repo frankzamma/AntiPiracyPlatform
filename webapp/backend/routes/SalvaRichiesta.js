@@ -82,10 +82,11 @@ router.post("/save-request", verifyTokenRequest, upload.single('file'),
             const response =
                 await axios.get("http://127.0.0.1:5000/predict?url=http://localhost:3001/files/" + req.file.filename)
 
+            console.log("Predizione: ", response.data)
 
             const OrgName = req.user.OrgName
             const args = id + "," + ipAddress + "," + description +
-                "," + fileHash + "," + "files/" + req.file.filename + "," + (response.prediction == category) + "," + "Org2" + "," + category + "," + OrgName
+                "," + fileHash + "," + "files/" + req.file.filename + "," + (response.data.prediction == category) + "," + "Org2" + "," + category + "," + OrgName
 
             let data = {
                 "channelid": "mychannel",
