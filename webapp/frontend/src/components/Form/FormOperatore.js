@@ -112,10 +112,12 @@ function  FormOperatore(){
                 <table className="table table-striped text-center">
                     <thead>
                     <tr>
+                        <th>ID</th>
                         <th>Ip Address</th>
                         <th>Description</th>
-                        <th>Image</th>
                         <th>Categoria</th>
+                        <th>Image</th>
+                        <th>Verified</th>
                         <th>SenderOrganizationID</th>
                         <th>Action</th>
                     </tr>
