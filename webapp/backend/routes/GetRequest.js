@@ -6,14 +6,15 @@ const {verifyTokenRequest} = require("../utils/jwtHelper");
 router.get("/requests",verifyTokenRequest,
     async (req, res) => {
 
-    /*const user = req.user
+    const user = req.user
 
-    console.log(user.OrgName)*/
+    console.log(user.OrgName)
         const token = req.header("Authorization");
 
         const response =
             await axios.get(
-                "http://localhost:3003/query?channelid=mychannel&chaincodeid=requestManage&function=GetAllRequest",
+                "http://localhost:3003/query?" +
+                "channelid=mychannel&chaincodeid=requestManage&function=GetAllRequestByOrganizationID&args=" + user.OrgName,
                 {
                     headers: {
                         'authorization': token

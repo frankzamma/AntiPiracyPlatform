@@ -133,6 +133,34 @@ func (s *SmartContract) GetRichiestaById(ctx contractapi.TransactionContextInter
 	return &request, nil
 }
 
+func (s *SmartContract) GetAllRequestByOrganizationID(ctx contractapi.TransactionContextInterface, orgId string) ([]*Request, error) {
+	resultsIterator, err := ctx.GetStub().GetStateByRange("", "")
+	if err != nil {
+		return nil, err
+	}
+	defer resultsIterator.Close()
+
+	var requests []*Request
+	for resultsIterator.HasNext() {
+		queryResponse, err := resultsIterator.Next()
+		if err != nil {
+			return nil, err
+		}
+
+		var request Request
+		err = json.Unmarshal(queryResponse.Value, &request)
+		if err != nil {
+			return nil, err
+		}
+
+		if request.SenderOrganizationID == orgId {
+			requests = append(requests, &request)
+		}
+	}
+
+	return requests, nil
+}
+
 func (s *SmartContract) GetAllRequest(ctx contractapi.TransactionContextInterface) ([]*Request, error) {
 	resultsIterator, err := ctx.GetStub().GetStateByRange("", "")
 	if err != nil {
