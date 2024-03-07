@@ -194,20 +194,21 @@ func (s *SmartContract) GetRequestByOp(ctx contractapi.TransactionContextInterfa
 
 	var operatorRequests []*OperatorRequest
 	for _, request := range requests {
-		operatorRequest := OperatorRequest{
-			ID:                   request.ID,
-			IpAddress:            request.IpAddress,
-			Description:          request.Description,
-			PathImage:            request.PathImage,
-			HashImage:            request.HashImage,
-			Verified:             request.Verified,
-			Category:             request.Category,
-			Confirmed:            request.Confirmed[idOp],
-			SenderOrganizationID: request.SenderOrganizationID,
+		if request.Confirmed[idOp] {
+			operatorRequest := OperatorRequest{
+				ID:                   request.ID,
+				IpAddress:            request.IpAddress,
+				Description:          request.Description,
+				PathImage:            request.PathImage,
+				HashImage:            request.HashImage,
+				Verified:             request.Verified,
+				Category:             request.Category,
+				Confirmed:            request.Confirmed[idOp],
+				SenderOrganizationID: request.SenderOrganizationID,
+			}
+
+			operatorRequests = append(operatorRequests, &operatorRequest)
 		}
-
-		operatorRequests = append(operatorRequests, &operatorRequest)
-
 	}
 
 	return operatorRequests, nil

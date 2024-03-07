@@ -27,7 +27,12 @@ function  VisualizzaRichiesteConfermateOperatore(){
                     setErrorMessage(response.data);
                     window.scrollTo(0, 0);
                 }else{
-                    setRequests(JSON.parse(response.data.substring(10)));
+                    if(!response.data.includes("{")){
+                        setErrorMessage("Non ci sono richieste confermate!")
+                    }else{
+                        setRequests(JSON.parse(response.data.substring(10)));
+                    }
+
                 }
             }).catch(error => {
             if (error.response && error.response.data) {
