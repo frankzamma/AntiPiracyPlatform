@@ -10,7 +10,7 @@ Project of course "Sicurezza dei Dati" - Università degli Studi di Salerno
 This repository contains an ideal implementation of an AntiPiracy Platform based on Web3, blockchain and AI.
 
 # Prerequisites
-To build and run this project, you shuold install:
+To build and run this project, you should install:
 - Hyperledger Fabric and its prerequisites (available at https://hyperledger-fabric.readthedocs.io/en/latest/getting_started.html))
 - [Golang](https://go.dev/)
 - [NodeJS](https://nodejs.org/en)
@@ -26,6 +26,7 @@ To build and run this project, you shuold install:
   *Note*: Replace \path\to\ with your local path of fabric-samples
 - Open a terminal into directory of cloned repository and run ./DeployContract.sh (If you use Windows, you should use WSL2 terminal for this purpose) and follow the istruction.
 - Once you finish the previous step, open the cloned repository with Goland and run the main of "RestInterfaceOrg1" and  "RestInterfaceOrg2".
+- Download from the link (Will available soon...) the Robustness Machine Learning model into ML path
 - Open a new terminal in ML path and run
    > flask run
 - Open a new terminal in webapp/backend path and run
